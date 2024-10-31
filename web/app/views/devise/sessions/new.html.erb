@@ -1,0 +1,13 @@
+<%= link_to "Iniciar sesión con Keycloak", user_keycloak_omniauth_authorize_path %>
+<br/>
+<%= link_to "Iniciar sesión con Keycloak 2", user_keycloak_omniauth_authorize_path(state: session[:omniauth_state]) %>
+
+<br/>
+KEYCLOAK_CLIENT_ID (<%= ENV['KEYCLOAK_CLIENT_ID'] %>) 
+<br/>
+KEYCLOAK_CLIENT_SECRET (<%= ENV['KEYCLOAK_CLIENT_SECRET'] %>)
+<br/>
+KEYCLOAK_URL (<%= ENV['KEYCLOAK_URL'] %>) 
+<br/>
+KEYCLOAK_REALM (<%= ENV['KEYCLOAK_REALM'] %>) 
+<br/>
