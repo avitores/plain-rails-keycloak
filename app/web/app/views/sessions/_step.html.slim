@@ -1,0 +1,21 @@
+
+h1 = title
+h2 = subtitle 
+
+= link_to root_path
+  span.me-1
+    button.btn.btn-success type="button" Home
+
+.my-5
+	.alert.alert-success role="success"
+		= label_data
+		br
+		.badge.bg-secondary
+			= data
+
+	.alert.alert-primary role="success"
+		h3 Next step
+		.mt-2.text-end
+			= link_to link_path
+				span.me-1
+					button.btn.btn-primary type="button" = link_label

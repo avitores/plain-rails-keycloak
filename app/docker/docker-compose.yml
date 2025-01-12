@@ -4,11 +4,6 @@ services:
     container_name: db
     image: mariadb:10.6
     env_file: .env
-    # environment:
-    #   MARIADB_ROOT_PASSWORD: root
-    #   MARIADB_DATABASE: web_db
-    #   MARIADB_USER: admin
-    #   MARIADB_PASSWORD: secreta
     ports:
       - "3306:3306"
     volumes:
@@ -22,29 +17,9 @@ services:
       dockerfile: Dockerfile    
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     env_file: .env
-    # environment:
-    #   KEYCLOAK_CLIENT_SECRET: C5cBpFPSR3Pgp1aI9yy7c4aBqO5YvEC8
-    #   KEYCLOAK_CLIENT_ID: rails_web
-    #   #KEYCLOAK_URL: http://keycloak_web:8080
-    #   #KEYCLOAK_URL: http://localhost:8080
-    #   KEYCLOAK_URL: http://172.25.0.3:8080
-      
-    #   KEYCLOAK_REALM: RailsRealm
-
-    #   DATABASE_URL: mysql2://admin:secreta@db:3306/web_db
-    #   DATABASE_USERNAME: admin
-    #   DATABASE_PASSWORD: secreta
-    #   DATABASE_NAME: web_db
-    #   #DATABASE_HOST: maria_db
-
     depends_on:
       - db
-      #- keycloak_web
     ports:
       - "3011:3000"
     volumes:
       - ../web:/app
-
-# volumes:
-#   mariadb_data:
-#   keycloak_data:

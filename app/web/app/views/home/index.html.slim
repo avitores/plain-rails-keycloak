@@ -1,86 +1,95 @@
-h1 Welcome to the Keycloak OmniAuth Example
-
-= link_to 'HOME', root_path
-hr
 - key_url = "http://localhost:8080/realms/#{ENV['KEYCLOAK_REALM']}/protocol/openid-connect/"
+- login_proc = "auth"
+- registration_proc = "registrations"
+- callback_url =  "http://localhost:3011/callback"
+- init_url =  "http://localhost:3011/init"
+- logout_url =  "http://localhost:3011/logout"
+- params_key = [ \
+    "client_id=#{ENV['KEYCLOAK_CLIENT_ID']}", \
+    #"redirect_uri=#{callback_url}", \
+    "response_type=code", \
+    "scope=openid email profile", \
+    #"login=true" , \
+    #"state=af0ifjsldkj",  \
+  ] 
+- params_login = ["login=true"]
+- params_reg = ["kc_action=register"]
+
+- path_login = "#{key_url}auth?#{(params_key + params_login + ["redirect_uri=#{callback_url}"]).join('&')}"
+- path_init_login = "#{key_url}auth?#{(params_key + params_login + ["redirect_uri=#{init_url}"]).join('&')}"
+- path_reg = "#{key_url}registrations?#{(params_key + params_reg + ["redirect_uri=#{callback_url}"]).join('&')}"
+- path_init_reg = "#{key_url}registrations?#{(params_key + ["redirect_uri=#{init_url}"]).join('&')}"
+
+h1 Welcome to the Keycloak Example
+
+= link_to root_path
+  span.me-1
+    button.btn.btn-success type="button" Home
 
 - if session[:user_email]
-
-  p
-    = "You are signed in as "
-  h2 
-    = session[:user_email]
-  h3
-    = session[:user_given_name]
-    = " "
-    = session[:user_family_name]
-
-  // = form_with(url: logout_path, method: :delete)
-  //   = submit_tag 'Log out'
-  hr
-  - path_logout = "#{key_url}logout?client_id=#{ENV['KEYCLOAK_CLIENT_ID']}&post_logout_redirect_uri=#{CGI.escape(logout_url)}"
-  = link_to 'Logout', path_logout
-  hr
-  //= link_to 'Sign Out', signout_path
+  .my-5
+    .alert.alert-success role="success"
+      = "You are logged"
+  .card.mb-4
+    .card-header
+      = session[:user_email]
+    .card-body
+      h5.card-title 
+        = session[:user_given_name]
+      p.card-text 
+        = session[:user_family_name]
+      = link_to "#{key_url}logout?client_id=#{ENV['KEYCLOAK_CLIENT_ID']}&post_logout_redirect_uri=#{CGI.escape(logout_url)}"
+        span.me-1
+          button.btn.btn-danger type="button" Logout
 - else
-  = "You are not logged"
-  hr
-  - login_proc = "auth"
-  - registration_proc = "registrations"
-  - callback_url =  "http://localhost:3011/callback"
-  - init_url =  "http://localhost:3011/init"
-  - logout_url =  "http://localhost:3011"
-  - params_key = [ \
-      "client_id=#{ENV['KEYCLOAK_CLIENT_ID']}", \
-      #"redirect_uri=#{callback_url}", \
-      "response_type=code", \
-      "scope=openid email profile", \
-      #"login=true" , \
-      #"state=af0ifjsldkj",  \
-    ] 
-  - params_login = ["login=true"]
-  - params_reg = ["kc_action=register"]
+  .my-5
+    .alert.alert-danger role="alert"
+      = "You are not logged"
+  = link_to path_login
+    span.me-1
+      button.btn.btn-primary type="button" Login
 
-  - path_login = "#{key_url}auth?#{(params_key + params_login + ["redirect_uri=#{callback_url}"]).join('&')}"
-  - path_init_login = "#{key_url}auth?#{(params_key + params_login + ["redirect_uri=#{init_url}"]).join('&')}"
-  - path_reg = "#{key_url}registrations?#{(params_key + params_reg + ["redirect_uri=#{callback_url}"]).join('&')}"
-  - path_init_reg = "#{key_url}registrations?#{(params_key + ["redirect_uri=#{init_url}"]).join('&')}"
+  = link_to path_init_login
+    span.me-1
+      button.btn.btn-info type="button" Login Flow
 
-  = link_to 'Login with Keycloak', path_login
-  = " | "
-  = link_to 'Login with Keycloak (PASO A PASO)', path_init_login
-  = " | "
-  = link_to 'Register with Keycloak', path_reg
-  = " | "
-  = link_to 'Register with Keycloak (PASO A PASO)', path_init_reg
-  hr
-  p
-    strong path login
-    br
-    = path_login
-  p
-    strong path registration
-    br
-    = path_reg
+  = link_to path_reg
+    span.me-1
+      button.btn.btn-primary type="button" Registration
 
-p
-  strong KEYCLOAK_URL
-  br
-  = ENV['KEYCLOAK_URL']
-p
-  strong KEYCLOAK_REALM
-  br
-  = ENV['KEYCLOAK_REALM']
-p
-  strong KEYCLOAK_CLIENT_ID
-  br
-  = ENV['KEYCLOAK_CLIENT_ID']
-p
-  strong KEYCLOAK_CLIENT_SECRET
-  br
-  = ENV['KEYCLOAK_CLIENT_SECRET']
-p
-  strong Sessión
-  br
-  = session.inspect
+  = link_to path_init_reg
+    span.me-1
+      button.btn.btn-info type="button" Registration Flow
+
+
+/   hr
+/   p
+/     strong path login
+/     br
+/     = path_login
+/   p
+/     strong path registration
+/     br
+/     = path_reg
+
+/ p
+/   strong KEYCLOAK_URL
+/   br
+/   = ENV['KEYCLOAK_URL']
+/ p
+/   strong KEYCLOAK_REALM
+/   br
+/   = ENV['KEYCLOAK_REALM']
+/ p
+/   strong KEYCLOAK_CLIENT_ID
+/   br
+/   = ENV['KEYCLOAK_CLIENT_ID']
+/ p
+/   strong KEYCLOAK_CLIENT_SECRET
+/   br
+/   = ENV['KEYCLOAK_CLIENT_SECRET']
+/ p
+/   strong Sessión
+/   br
+/   = session.inspect
 

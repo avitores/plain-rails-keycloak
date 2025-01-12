@@ -6,13 +6,6 @@ services:
     volumes:
       - ../data/postgres/data/:/var/lib/postgresql/data/
     env_file: .env
-    # environment:
-    #   POSTGRES_HOST: postgresdb
-    #   POSTGRES_USERNAME: postgresuser
-    #   POSTGRES_PASSWORD: secreta
-    #   POSTGRES_DBNAME: keycloakdb
-    #   POSTGRES_USER: postgresuser
-    #   POSTGRES_DB: keycloakdb
     ports:
       - '5433:5432'
 
@@ -21,30 +14,10 @@ services:
     container_name: keycloak_web
     image: quay.io/keycloak/keycloak:25.0.1    
     env_file: .env
-    # environment:
-    #   KC_DB: postgres
-    #   KC_DB_URL: jdbc:postgresql://postgres_db:5432/keycloakdb
-    #   KC_DB_USERNAME: postgresuser
-    #   KC_DB_PASSWORD: secreta
-
-    #   KC_HOSTNAME: localhost
-    #   KC_HOSTNAME_STRICT: "false"
-    #   KC_HOSTNAME_STRICT_HTTPS: "false"
-
-    #   KC_LOG_LEVEL: debug
-    #   KC_LOG_LEVEL_CATEGORY: org.keycloak.authentication:TRACE
-    #   KC_METRICS_ENABLED: "true"
-    #   KC_HEALTH_ENABLED: "true"
-    #   KEYCLOAK_ADMIN: admin
-    #   KEYCLOAK_ADMIN_PASSWORD: admin
- 
     command:
       - start-dev
-      #- --http-host=0.0.0.0
       #- --log-level=DEBUG,org.keycloak.authentication:TRACE
     ports:
       - "8080:8080"
-    # volumes:
-    #   - ../data/keycloak:/opt/keycloak/data
     depends_on:
       - postgres_db

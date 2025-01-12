@@ -1,18 +1,9 @@
-h1 Sessions#get_token
-
-= link_to 'HOME', root_path
-
-.info 
-	p
-		= "ORIGEN Authorization code: (#{@authorization_code})"
-
-- if @access_token
-	p
-		= "Access token: (#{@access_token})"
-	.next
-		h2 
-			= "Next step"
-		= link_to 'Get User Info', session_get_user_info_path(CGI.escape(@access_token).gsub('.', '%2E'))
-- else
-	.error 
-		= "ERROR (#{@response.inspect})"
+= render partial: 'step', \
+				 locals:{ \
+				 					title: "Authorized code",  \
+									subtitle: "Access token", \
+									label_data: "Access token returned", \
+									data: @access_token,  \
+									link_path: session_get_user_info_path(CGI.escape(@access_token).gsub('.', '%2E')),  \
+									link_label: "Get user info" \
+								} 

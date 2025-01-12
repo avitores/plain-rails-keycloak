@@ -139,13 +139,14 @@ class SessionsController < ApplicationController
     logger.debug("OJO! destroy ANTES(#{session[:user_info].inspect})")
     reset_session
     logger.debug("OJO! destroy DESPUES(#{session[:user_info].inspect})")
-
+    redirect_to root_path
     # Redirige al usuario a la URL de logout de Keycloak
     #redirect_to "#{ENV['KEYCLOAK_URL']}/realms/#{ENV['KEYCLOAK_REALM']}/protocol/openid-connect/logout?client_id=#{ENV['KEYCLOAK_CLIENT_ID']}&post_logout_redirect_uri=#{CGI.escape('http://localhost:3011')}", allow_other_host: true
-    redirect_to "http://localhost:8080/realms/#{ENV['KEYCLOAK_REALM']}/protocol/openid-connect/logout?client_id=#{ENV['KEYCLOAK_CLIENT_ID']}&post_logout_redirect_uri=http://localhost:3011", allow_other_host: true #?#{(params_key + params_login + ["redirect_uri=#{callback_url}"]).join('&')}"
+    #redirect_to "http://localhost:8080/realms/#{ENV['KEYCLOAK_REALM']}/protocol/openid-connect/logout?client_id=#{ENV['KEYCLOAK_CLIENT_ID']}&post_logout_redirect_uri=http://localhost:3011", allow_other_host: true #?#{(params_key + params_login + ["redirect_uri=#{callback_url}"]).join('&')}"
   end
 
   def failure
     redirect_to root_path, alert: 'Authentication failed!'
   end
+
 end

@@ -1,12 +1,36 @@
-h1 Sessions#create
+= render partial: 'step', \
+				 locals:{ \
+				 					title: "Authenticated user",  \
+									subtitle: "Authorization code", \
+									label_data: "Authorization code returned", \
+									data: @authorization_code,  \
+									link_path: session_get_token_path(CGI.escape(@authorization_code).gsub('.', '%2E')),  \
+									link_label: "Get access token" \
+								} 
 
-= link_to 'HOME', root_path
 
-.info 
-	p
-		= "Authorization_code: (#{@authorization_code})"
+/ h1 Keycloak user logged
+/ h2 Authorization code 
 
-.next
-	h2 
-		= "Next step"
-	= link_to 'Get access token', session_get_token_path(CGI.escape(@authorization_code).gsub('.', '%2E'))
+/ = link_to root_path
+/   span.me-1
+/     button.btn.btn-success type="button" Home
+
+/ .my-5
+/ 	.alert.alert-success role="success"
+/ 		= "Authorization code returned"
+/ 		br
+/ 		.badge.bg-secondary
+/ 			= @authorization_code
+
+/ 	.alert.alert-primary role="success"
+/ 		h3 Next step
+/ 		.mt-2.text-end
+/ 			= link_to session_get_token_path(CGI.escape(@authorization_code).gsub('.', '%2E'))
+/ 				span.me-1
+/ 					button.btn.btn-primary type="button" Get access token
+
+/ / .next
+/ / 	h2 
+/ / 		= "Next step"
+/ / 	= link_to 'Get access token', session_get_token_path(CGI.escape(@authorization_code).gsub('.', '%2E'))
