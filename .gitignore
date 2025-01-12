@@ -1,2 +1,3 @@
 data/
-docker/.env*
+app/docker/.env*
+keycloak/docker/.env*

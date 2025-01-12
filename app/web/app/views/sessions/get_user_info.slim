@@ -1,0 +1,25 @@
+h1 Sessions#gt_user_info
+
+= link_to 'HOME', root_path
+
+.info 
+	p
+		= "User info: (#{@user_info})"
+		br		
+		= "User email: (#{@email.inspect})"
+- if @email
+	.next
+		h2 
+			= "Next step"
+		//= link_to 'Init sessión', session_init_session_path(CGI.escape(@email).gsub('.', '%2E').gsub('@', '%40'))
+		//- email_escaped = CGI.escape(@email).gsub('.', '%2E').gsub('@', '%40')
+		//- email_escaped = CGI.escape(@email.to_s.force_encoding('UTF-8')).gsub('.', '%2E').gsub('@', '%40').force_encoding('UTF-8')
+		/ - email_utf8 = @email.to_s.force_encoding('UTF-8').encode('UTF-8', invalid: :replace, undef: :replace, replace: '')
+		/ - email_escaped = CGI.escape(email_utf8)
+
+		/ = "(#{email_escaped})"
+		/ = "(#{email_utf8})"
+		//= link_to 'Init sessión', session_init_session_path(CGI.escape(@email.to_s.encode('UTF-8')))
+
+
+		= link_to 'Init session', session_init_session_path(user_info: @user_info)

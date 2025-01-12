@@ -30,15 +30,23 @@ Rails.application.routes.draw do
   # get '/signout', to: 'sessions#destroy', as: 'signout'
 
   # Ruta para el callback de OmniAuth
-  get '/auth/:provider/callback', to: 'sessions#create', as: :auth_callback
+  #get '/auth/:provider/callback', to: 'sessions#create', as: :auth_callback
+
+  get '/callback', to: 'sessions#create', as: :auth_callback
+  get '/init', to: 'sessions#init', as: :auth_init
+  get '/get_token/:authorization_code', to: 'sessions#get_token', as: :session_get_token
+  get '/get_user_info/:access_token', to: 'sessions#get_user_info', as: :session_get_user_info
+  get '/init_session', to: 'sessions#init_session', as: :session_init_session
+  #get '/auth/:provider/callback', to: 'sessions#create'
   get '/auth/failure', to: 'sessions#failure', as: :auth_failure
+  get '/logout', to: 'sessions#destroy'
 
   # Ruta para iniciar sesión, esto activará OmniAuth
-  get '/auth/keycloak_openid', as: :keycloak_login
+  #get '/auth/keycloak_openid', as: :keycloak_login
 
   # Ruta de cierre de sesión
-  get '/signout', to: 'sessions#destroy', as: 'signout'
-    
+  #get '/signout', to: 'sessions#destroy', as: 'signout'
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

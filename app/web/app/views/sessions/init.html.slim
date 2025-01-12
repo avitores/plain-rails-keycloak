@@ -1,0 +1,12 @@
+h1 Sessions#create
+
+= link_to 'HOME', root_path
+
+.info 
+	p
+		= "Authorization_code: (#{@authorization_code})"
+
+.next
+	h2 
+		= "Next step"
+	= link_to 'Get access token', session_get_token_path(CGI.escape(@authorization_code).gsub('.', '%2E'))
